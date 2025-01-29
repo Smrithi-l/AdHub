@@ -1,0 +1,18 @@
+/* Signup.css */
+.signup-page {
+    background-color: #f5f5f5;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .signup-page .MuiPaper-root {
+    padding: 2rem;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .signup-page .MuiButton-root {
+    margin-top: 1rem;
+  }
+  
