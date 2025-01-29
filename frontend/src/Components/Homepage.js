@@ -4,6 +4,8 @@ import { Container, Typography, Grid, TextField, Button, Box } from "@mui/materi
 import { motion } from "framer-motion";
 import "./Homepage.css";
 import React, { useEffect } from "react";
+import heroImage from "./images/education.png"; // Adjust the path as needed
+
 
 const Homepage = () => {
   useEffect(() => {
@@ -46,7 +48,7 @@ const Homepage = () => {
         </div>
         <img
           className="hero-image"
-          src="https://via.placeholder.com/1200x600"
+          src={heroImage} // Use the imported image here
           alt="AdHub Hero"
         />
       </motion.section>

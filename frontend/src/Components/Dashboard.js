@@ -7,12 +7,9 @@ import {
   Box,
   Button,
   TextField,
-  MenuItem,
 } from "@mui/material";
 import { motion } from "framer-motion";
 import "./Dashboard.css";
-
-
 
 const Dashboard = () => {
   const [adData, setAdData] = useState({
@@ -32,20 +29,42 @@ const Dashboard = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Ad Submitted:", adData);
-    alert("Ad created successfully!");
-    setAdData({
-      title: "",
-      description: "",
-      niche: "",
-      image: "",
-      priceRange: "",
-      audience: "",
-    });
+
+    try {
+      const token = localStorage.getItem("authToken"); // Get user's token
+      const response = await fetch("http://localhost:5000/api/ads/save", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(adData),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        alert(data.message); // Show success message
+        setAdData({
+          title: "",
+          description: "",
+          niche: "",
+          image: "",
+          priceRange: "",
+          audience: "",
+        });
+      } else {
+        const errorData = await response.json();
+        alert(errorData.message || "Failed to create ad.");
+      }
+    } catch (err) {
+      console.error("Error submitting ad:", err);
+      alert("An error occurred. Please try again.");
+    }
   };
 
+  
   return (
     <div className="dashboard">
       <Container maxWidth="lg">

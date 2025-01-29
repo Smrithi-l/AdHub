@@ -23,15 +23,15 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/users/register', formData);
-      console.log('User registered:', response.data);
-      navigate('/dashboard'); // Redirect to the dashboard after successful signup
+      const response = await axios.post("http://localhost:5000/api/users/register", formData);
+      localStorage.setItem("authToken", response.data.token); // Save token
+      navigate("/dashboard");
     } catch (error) {
-      console.error('Error during signup:', error);
-      alert(error.response?.data?.message || 'Server error, please try again');
+      console.error("Error during signup:", error);
+      alert(error.response?.data?.message || "Server error, please try again");
     }
   };
-
+  
   return (
     <div className="signup-page">
       <Container maxWidth="sm">

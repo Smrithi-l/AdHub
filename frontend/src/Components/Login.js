@@ -15,27 +15,16 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Check if the fields are empty
-    if (!formData.email || !formData.password) {
-      setError("Both email and password are required");
-      return;
-    }
-
     try {
-      const response = await axios.post("http://localhost:5000/api/users/login", formData, {
-        headers: {
-          "Content-Type": "application/json", // Ensure content type is JSON
-        },
-      });
-
-      // Save token to localStorage
-      localStorage.setItem("authToken", response.data.token);
+      const response = await axios.post("http://localhost:5000/api/users/login", formData);
+      localStorage.setItem("authToken", response.data.token); // Save token
       navigate("/dashboard");
     } catch (err) {
-      setError(err.response?.data?.message || "Something went wrong, please try again.");
+      console.error("Login error:", err);
+      setError(err.response?.data?.message || "Server error, please try again");
     }
   };
+  
 
   return (
     <Container maxWidth="sm">
