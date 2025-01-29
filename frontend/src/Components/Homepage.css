@@ -16,77 +16,197 @@ button {
   border: none;
 }
 
+.bg-white {
+  background-color: #ffffff;
+}
+
+.container {
+  max-width: 1200px;
+  margin-left: 150px;
+  margin-right: 15px;
+  padding-left: 15px;
+  padding-right: 150px;
+  display: flex;
+  flex-direction: row; /* Layout items horizontally */
+  justify-content: flex-start; /* Align items to the left */
+  gap: 2rem; /* Space between items */
+  flex-wrap: wrap; /* Allow items to wrap if needed */
+}
+
+/* Padding and Spacing */
+.pb-14 {
+  padding-bottom: 5.5rem;
+}
+
+.pt-16 {
+  padding-top: 2.5rem;
+}
+
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
+/* Service Container */
+.service-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0rem; /* Adjust the space between the items */
+  justify-content: center; /* Center the items horizontally */
+}
+
+/* Service Box Styling */
+.service-box {
+  background-color: #f4f4f4;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0rem;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  padding-top: 1.75rem;
+  padding-bottom: 1.75rem;
+  transition: all 0.3s ease;
+  min-width: 150px; /* Ensure they have a reasonable width */
+  flex-grow: 1; /* Allow them to grow */
+  max-width: 350px; /* Limit the width of each box */
+  flex-shrink: 0; /* Prevent shrinking */
+}
+
+/* Hover effect for Service Box */
+.service-box:hover {
+  background-color: #ffffff;
+  transform: scale(1.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Icon Container */
+.icon-container {
+  font-size: 2.25rem;
+  margin-bottom: 1rem;
+}
+
+/* Title Styling */
+.service-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  text-align: center;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 640px) {
+  .service-container {
+    flex-direction: column; /* Stack the service boxes vertically on smaller screens */
+    align-items: center; /* Center them horizontally */
+  }
+
+  .service-container {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    gap: 1rem; /* Space between items */
+  }
+
+  .service-box {
+    width: 80%; /* Make the service boxes fill most of the width */
+    margin-bottom: 1rem; /* Add spacing between items */
+  }
+}
+
+@media (min-width: 768px) {
+  .service-container {
+    flex-direction: row; /* Stack the service boxes in rows for medium and larger screens */
+    gap: 1.5rem; /* Adjust the gap */
+    justify-content: center;
+  }
+
+  .service-box {
+    width: 30%; /* Make the service boxes take up 30% of the container width */
+  }
+}
+
+@media (min-width: 1024px) {
+  .service-box {
+    width: 22%; /* Take up less space for larger screens, adjust accordingly */
+  }
+}
+
 /* Header */
 .header {
+  font-family: 'Nunito', sans-serif;
   display: flex;
-  justify-content: flex-start; /* Align items to the left */
-  align-items: center; /* Center items vertically */
-  padding: 20px 40px;
-  background-color: #2c3e50;
-  color: white;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px 10px;
+  background-color: #f7fbff;
+  color: rgb(255, 255, 255);
   position: fixed;
   width: 100%;
   top: 0;
   z-index: 100;
+  transition: background-color 0.3s ease-in-out;
 }
 
 .logo {
-  font-size: 2rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2.5rem;
   font-weight: bold;
-  color: #e74c3c;
-  margin-right: 940px; /* Reduces space between logo and nav */
+  color: #085e15;
+  margin-right: 790px;
   flex-shrink: 0;
-  
+  transform: translateX(20px); /* Adjust the value to move the logo to the right */
 }
 
 .nav {
   display: flex;
-  align-items: center; /* Ensures vertical alignment */
+  align-items: center;
 }
 
 .nav a {
-  margin: 0 10px; /* Reduces space between links */
-  color: white;
-  font-size: 1rem;
-  text-decoration: none;
+  margin: 0 15px;
+  color: rgb(32, 144, 112);
+  font-size: 1.1rem;
+  text-decoration: none; /* Remove default underline */
+  position: relative;
 }
 
 .nav a:hover {
-  text-decoration: underline;
+  text-decoration: none; /* Remove underline on hover */
 }
 
-.btn-signup {
-  padding: 10px 20px;
-  background-color: #e74c3c;
-  color: white;
-  font-weight: bold;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  margin-left: 15px; /* Add space before the button */
+.nav a:before {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #e74500;
+  transition: width 0.3s ease;
 }
 
-.btn-signup:hover {
-  background-color: #c0392b;
+.nav a:hover:before {
+  width: 100%;
+}
+
+.nav a.active:before {
+  width: 100%;
 }
 
 /* Hero Section */
-.hero {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 100px 50px;
-  background-color: #2980b9;
-  color: white;
-}
-
 .hero-content {
   max-width: 50%;
 }
 
 .hero-content h1 {
-  font-size: 3rem;
-  margin-bottom: 20px;
+  font-size: 3.2rem;
+  margin-bottom: 22px;
 }
 
 .hero-content p {
@@ -111,9 +231,40 @@ button {
 }
 
 .hero-image {
-  max-width: 45%;
+  max-width: 35%;
   border-radius: 15px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0px 00px rgba(0, 0, 0, 0.2);
+  transform: translateX(-50px) translateY(40px); /* Moves the image to the left and down */
+
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 100px 50px;
+  background-color: #64e1f1;
+  color: rgb(0, 0, 0);
+}
+
+.hero h1 {
+  font-family: 'Roboto', sans-serif; /* Apply specific font for the heading */
+  font-weight: 600;
+  font-size: 3rem;
+}
+
+.hero p {
+  font-family: 'Poppins', sans-serif; /* Apply specific font for paragraph */
+  font-weight: 400;
+  font-size: 1.25rem;
+}
+
+.hero-buttons {
+  margin-top: 20px;
+}
+
+.hero-buttons .MuiButton-root {
+  font-family: 'Poppins', sans-serif; /* Apply font for buttons */
 }
 
 /* Features Section */

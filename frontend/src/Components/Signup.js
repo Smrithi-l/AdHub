@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
-import { Container, Typography, TextField, Button, Grid, Paper } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import './Signup.css';
+import React, { useState } from "react";
+import axios from "axios"; // Import axios for HTTP requests
+import "./Signup.css"; // Import CSS for styling
 
 const Signup = () => {
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
+    name: "",
+    email: "",
+    password: "",
   });
+  const [error, setError] = useState(""); // For handling errors
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,73 +21,79 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/api/users/register", formData);
-      localStorage.setItem("authToken", response.data.token); // Save token
-      navigate("/dashboard");
+      const response = await axios.post(
+        "http://localhost:5000/api/users/register", // Your backend API endpoint
+        formData
+      );
+      localStorage.setItem("authToken", response.data.token); // Save token in localStorage
+      window.location.href = "/dashboard"; // Redirect to dashboard after signup
     } catch (error) {
       console.error("Error during signup:", error);
-      alert(error.response?.data?.message || "Server error, please try again");
+      setError(error.response?.data?.message || "Server error, please try again");
     }
   };
-  
+
   return (
-    <div className="signup-page">
-      <Container maxWidth="sm">
-        <Paper elevation={6} sx={{ padding: 3, borderRadius: 3 }}>
-          <Typography variant="h3" align="center" gutterBottom>
-            Create an Account
-          </Typography>
+    <>
+      <div className="signup-container">
+        {/* Right Section: Image */}
+        <div className="image-section">
+          {/* Background image can be set via CSS */}
+        </div>
 
-          <form onSubmit={handleSubmit}>
-            <Grid container spacing={3} justifyContent="center">
-              <Grid item xs={12}>
-                <TextField
-                  label="Name"
-                  variant="outlined"
-                  fullWidth
-                  required
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                />
-              </Grid>
+        {/* Left Section: Form Section */}
+        <div className="form-section">
+          <h2>Create an Account</h2>
 
-              <Grid item xs={12}>
-                <TextField
-                  label="Email"
-                  variant="outlined"
-                  fullWidth
-                  required
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                />
-              </Grid>
+          {/* Error Message */}
+          {error && <p className="error-message">{error}</p>}
 
-              <Grid item xs={12}>
-                <TextField
-                  label="Password"
-                  variant="outlined"
-                  fullWidth
-                  required
-                  type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                />
-              </Grid>
+          {/* Form */}
+          <form className="signup-form" onSubmit={handleSubmit}>
+            {/* Username Field */}
+            <label htmlFor="name">Username</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Username"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
 
-              <Grid item xs={12}>
-                <Button type="submit" variant="contained" color="primary" fullWidth size="large">
-                  Sign Up
-                </Button>
-              </Grid>
-            </Grid>
+            {/* Email Field */}
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="email@gmail.com"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+
+            {/* Password Field */}
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+
+            {/* Submit Button */}
+            <button type="submit" className="signup-button">
+              Sign Up
+            </button>
           </form>
-        </Paper>
-      </Container>
-    </div>
+        </div>
+      </div>
+    </>
   );
 };
 
