@@ -1,51 +1,19 @@
 const express = require('express');
-
 const mongoose = require('mongoose');
-
 const cors = require('cors');
-
 const bodyParser = require('body-parser');
-
 const dotenv = require('dotenv'); // Make sure to add dotenv for environment variables'
-
 const bcrypt = require("bcrypt");
-
 const jwt = require("jsonwebtoken");
-
 const Ad = require("./models/Ad"); // Ensure correct path
-
-
-
-// Import Routes
-
+const chatRoutes = require("./routes/chatRoutes");
 const userRoutes = require('./routes/userRoutes');
-
 const adRoutes = require('./routes/adRoutes');
-
-
-
-// Initialize dotenv
-
 dotenv.config();
-
-
-
 const app = express();
-
 const PORT = process.env.PORT || 5000;
-
-
-
-// Middleware setup
-
 app.use(cors());
-
 app.use(bodyParser.json());
-
-
-
-// MongoDB connection setup
-
 mongoose
 
   .connect(process.env.MONGODB_URI, {
@@ -67,25 +35,12 @@ mongoose
 app.use('/api/users', userRoutes);
 
 app.use('/api/ads', adRoutes); // Added adRoutes here
-
-
-
-
-
+app.use("/api/chat", chatRoutes);
 const adminSchema = new mongoose.Schema({
-
-  email: { type: String, required: true, unique: true },
-
-  password: { type: String, required: true },
-
+email: { type: String, required: true, unique: true },
+password: { type: String, required: true },
 });
-
 const Admin = mongoose.model("Admin", adminSchema);
-
-
-
-
-
 const verifyToken = (req, res, next) => {
 
   const token = req.headers.authorization?.split(" ")[1];

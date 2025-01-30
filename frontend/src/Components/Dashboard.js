@@ -7,19 +7,17 @@ import {
   Box,
   Button,
   TextField,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
+  Card,
+  CardContent,
 } from "@mui/material";
 import { motion } from "framer-motion";
+import { Pie } from "react-chartjs-2";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import ChatWidget from "./ChatWidget"; // Import the ChatWidget component
 import "./Dashboard.css";
+
+// Register Chart.js components
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const Dashboard = () => {
   const [adData, setAdData] = useState({
@@ -31,9 +29,25 @@ const Dashboard = () => {
     audience: "",
   });
   const [ads, setAds] = useState([]);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [adminDialogOpen, setAdminDialogOpen] = useState(false);
-  const [adminPassword, setAdminPassword] = useState("");
+  const [userId, setUserId] = useState(null); // Store user ID
+
+  useEffect(() => {
+    const storedUserId = localStorage.getItem("userId");
+    if (storedUserId && storedUserId !== "null") {
+      setUserId(storedUserId); // Set the userId only if it's valid
+    } else {
+      console.error("User ID is missing or invalid.");
+    }
+  }, []);
+  // This will run only once when the component is mounted
+  
+  useEffect(() => {
+    if (userId) {
+      fetchAds(userId); // Fetch ads when userId is set
+    }
+  }, [userId]); // This will run only when the userId changes
+   // This ensures fetchAds runs only when userId is set
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -67,6 +81,7 @@ const Dashboard = () => {
           priceRange: "",
           audience: "",
         });
+        fetchAds(userId);
       } else {
         const errorData = await response.json();
         alert(errorData.message || "Failed to create ad.");
@@ -77,12 +92,22 @@ const Dashboard = () => {
     }
   };
 
-  const fetchAds = async () => {
+  const fetchAds = async (userId) => {
     try {
-      const response = await fetch("http://localhost:5000/api/ads");
+      // Ensure userId is available
+      if (!userId) {
+        console.error("User ID is missing or invalid.");
+        alert("Invalid or missing user ID.");
+        return;
+      }
+  
+      // Make sure userId is sent as query parameter
+      const response = await fetch(`http://localhost:5000/api/ads/ads?userId=${userId}`);
+  
       if (response.ok) {
         const data = await response.json();
-        setAds(data.ads);
+        setAds(data.ads);  // Set the ads only for the logged-in user
+        console.log("Fetched ads:", data.ads);
       } else {
         console.error("Failed to fetch ads");
       }
@@ -90,20 +115,18 @@ const Dashboard = () => {
       console.error("Error fetching ads:", err);
     }
   };
-
-  const handleAdminLogin = () => {
-    if (adminPassword === "admin123") {
-      setIsAdmin(true);
-      fetchAds();
-      setAdminDialogOpen(false);
-    } else {
-      alert("Incorrect password.");
-    }
-  };
-
-  const handleAdminLogout = () => {
-    setIsAdmin(false);
-    setAds([]);
+  
+  
+  // Pie chart data for ads created
+  const pieChartData = {
+    labels: ["Ads Created", "Remaining Ads"],
+    datasets: [
+      {
+        data: [ads.length, 10 - ads.length], // Assuming a max of 10 ads for this example
+        backgroundColor: ["#4caf50", "#ff5722"],
+        hoverBackgroundColor: ["#45a049", "#f44336"],
+      },
+    ],
   };
 
   return (
@@ -111,237 +134,123 @@ const Dashboard = () => {
       <Container maxWidth="lg">
         {/* Navbar */}
         <Box sx={{ display: "flex", justifyContent: "space-between", mb: 4 }}>
-          <Typography variant="h4">AdHub</Typography>
-          <Button
-            variant="outlined"
-            color="secondary"
-            onClick={() => setAdminDialogOpen(true)}
-          >
-            Admin Login
-          </Button>
+          <Typography variant="h4" sx={{ fontWeight: "bold", color: "#333" }}>
+            AdHub
+          </Typography>
         </Box>
 
-        {/* Admin Login Dialog */}
-        <Dialog open={adminDialogOpen} onClose={() => setAdminDialogOpen(false)}>
-          <DialogTitle>Admin Login</DialogTitle>
-          <DialogContent>
-            <TextField
-              type="password"
-              label="Password"
-              fullWidth
-              value={adminPassword}
-              onChange={(e) => setAdminPassword(e.target.value)}
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => setAdminDialogOpen(false)}>Cancel</Button>
-            <Button onClick={handleAdminLogin} color="primary">
-              Login
-            </Button>
-          </DialogActions>
-        </Dialog>
-
-        {isAdmin ? (
-          <Box>
-            {/* Admin Panel */}
-            <Typography variant="h4" gutterBottom>
-              Admin Panel
+        {/* Welcome Section */}
+        <Box sx={{ textAlign: "center", mb: 6 }}>
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <Typography variant="h3" gutterBottom sx={{ fontWeight: "bold", color: "#3f51b5" }}>
+              Welcome to AdHub Dashboard
             </Typography>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={handleAdminLogout}
-              sx={{ mb: 3 }}
-            >
-              Logout
-            </Button>
-            <TableContainer component={Paper}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Title</TableCell>
-                    <TableCell>Description</TableCell>
-                    <TableCell>Niche</TableCell>
-                    <TableCell>Price Range</TableCell>
-                    <TableCell>Audience</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {ads.map((ad) => (
-                    <TableRow key={ad.id}>
-                      <TableCell>{ad.title}</TableCell>
-                      <TableCell>{ad.description}</TableCell>
-                      <TableCell>{ad.niche}</TableCell>
-                      <TableCell>{ad.priceRange}</TableCell>
-                      <TableCell>{ad.audience}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Box>
-        ) : (
-          <Box>
-            {/* Welcome Section */}
-            <Box sx={{ textAlign: "center", mb: 4 }}>
-              <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-              >
-                <Typography variant="h3" gutterBottom>
-                  Welcome to AdHub Dashboard
-                </Typography>
-                <Typography variant="body1" color="textSecondary">
-                  Get started with managing your campaigns, publishers, and
-                  advertisers in one place.
-                </Typography>
-              </motion.div>
-            </Box>
+            <Typography variant="body1" color="textSecondary">
+              Manage your campaigns, publishers, and advertisers efficiently.
+            </Typography>
+          </motion.div>
+        </Box>
 
-            {/* Overview Cards */}
-            <Grid container spacing={4} justifyContent="center">
-              {["Campaigns", "Publishers", "Advertisers"].map((type, index) => (
-                <Grid item xs={12} sm={4} key={type}>
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: index * 0.2 }}
-                  >
-                    <Paper
-                      sx={{
-                        padding: 3,
-                        textAlign: "center",
-                        background: "linear-gradient(135deg, #f3e5f5, #e1bee7)",
-                        boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
-                      }}
-                      elevation={3}
-                    >
-                      <Typography variant="h4" gutterBottom>
-                        {index * 4 + 4}
-                      </Typography>
-                      <Typography variant="h6" color="textSecondary">
-                        Active {type}
-                      </Typography>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        sx={{ mt: 2 }}
-                      >
-                        View {type}
-                      </Button>
-                    </Paper>
-                  </motion.div>
-                </Grid>
-              ))}
-            </Grid>
-
-            {/* Ad Creation Form */}
-            <Box sx={{ mt: 6 }}>
+        {/* Overview Cards */}
+        <Grid container spacing={4} justifyContent="center">
+          {["Campaigns", "Publishers", "Advertisers"].map((type, index) => (
+            <Grid item xs={12} sm={4} key={type}>
               <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: index * 0.2 }}
               >
                 <Paper
                   sx={{
                     padding: 3,
-                    borderRadius: 3,
-                    background: "#fafafa",
+                    textAlign: "center",
+                    background: "#3f51b5",
+                    color: "#fff",
+                    boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
+                    borderRadius: "12px",
                   }}
-                  elevation={6}
+                  elevation={3}
                 >
-                  <Typography variant="h4" align="center" gutterBottom>
-                    Create an Ad
+                  <Typography variant="h4" gutterBottom>
+                    {index * 4 + 4}
                   </Typography>
-                  <form onSubmit={handleSubmit}>
-                    <Grid container spacing={3}>
-                      <Grid item xs={12}>
-                        <TextField
-                          label="Ad Title"
-                          variant="outlined"
-                          fullWidth
-                          required
-                          name="title"
-                          value={adData.title}
-                          onChange={handleChange}
-                        />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <TextField
-                          label="Ad Description"
-                          variant="outlined"
-                          fullWidth
-                          required
-                          name="description"
-                          multiline
-                          rows={4}
-                          value={adData.description}
-                          onChange={handleChange}
-                        />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <TextField
-                          label="Ad Niche"
-                          variant="outlined"
-                          fullWidth
-                          required
-                          name="niche"
-                          value={adData.niche}
-                          onChange={handleChange}
-                        />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <TextField
-                          label="Ad Image URL"
-                          variant="outlined"
-                          fullWidth
-                          required
-                          name="image"
-                          value={adData.image}
-                          onChange={handleChange}
-                        />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <TextField
-                          label="Price Range"
-                          variant="outlined"
-                          fullWidth
-                          required
-                          name="priceRange"
-                          value={adData.priceRange}
-                          onChange={handleChange}
-                        />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <TextField
-                          label="Targeted Audience"
-                          variant="outlined"
-                          fullWidth
-                          required
-                          name="audience"
-                          value={adData.audience}
-                          onChange={handleChange}
-                        />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Button
-                          type="submit"
-                          variant="contained"
-                          color="secondary"
-                          fullWidth
-                          size="large"
-                        >
-                          Submit Ad
-                        </Button>
-                      </Grid>
-                    </Grid>
-                  </form>
+                  <Typography variant="h6">Active {type}</Typography>
                 </Paper>
               </motion.div>
-            </Box>
-          </Box>
-        )}
+            </Grid>
+          ))}
+        </Grid>
+
+        {/* Ad Creation Section */}
+        <Box sx={{ mt: 6, display: "flex", justifyContent: "center" }}>
+          <Card sx={{ maxWidth: 600, width: "100%", padding: 4, borderRadius: "15px", boxShadow: 3 }}>
+            <CardContent>
+              <Typography variant="h4" align="center" gutterBottom sx={{ fontWeight: "bold" }}>
+                Create an Ad
+              </Typography>
+              <form onSubmit={handleSubmit}>
+                <Grid container spacing={3}>
+                  {["title", "description", "niche", "image", "priceRange", "audience"].map((field) => (
+                    <Grid item xs={12} key={field}>
+                      <TextField
+                        label={field.charAt(0).toUpperCase() + field.slice(1)}
+                        variant="outlined"
+                        fullWidth
+                        required
+                        name={field}
+                        value={adData[field]}
+                        onChange={handleChange}
+                        multiline={field === "description"}
+                        rows={field === "description" ? 4 : 1}
+                      />
+                    </Grid>
+                  ))}
+                  <Grid item xs={12}>
+                    <Button type="submit" variant="contained" color="secondary" fullWidth size="large">
+                      Submit Ad
+                    </Button>
+                  </Grid>
+                </Grid>
+              </form>
+            </CardContent>
+          </Card>
+        </Box>
+
+        {/* User Ads List */}
+        <Box sx={{ mt: 6 }}>
+          <Typography variant="h5" sx={{ mb: 2, fontWeight: "bold", color: "#3f51b5" }}>
+            Your Created Ads
+          </Typography>
+          <Grid container spacing={3}>
+            {ads.map((ad) => (
+              <Grid item xs={12} sm={6} md={4} key={ad._id}>
+                <Paper sx={{ padding: 3, borderRadius: "12px", boxShadow: 3 }}>
+                  <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                    {ad.title}
+                  </Typography>
+                  <Typography variant="body2" sx={{ mt: 1 }}>
+                    {ad.description}
+                  </Typography>
+                  <Typography variant="caption" sx={{ display: "block", mt: 1, color: "gray" }}>
+                    Niche: {ad.niche}
+                  </Typography>
+                  <Typography variant="caption" sx={{ display: "block", mt: 1, color: "gray" }}>
+                    Price Range: {ad.priceRange}
+                  </Typography>
+                </Paper>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+
+        {/* Chat Widget */}
+        <Box sx={{ mt: 6 }}>
+          <ChatWidget />
+        </Box>
       </Container>
     </div>
   );

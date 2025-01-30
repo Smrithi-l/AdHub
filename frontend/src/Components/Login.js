@@ -27,6 +27,8 @@ const Login = () => {
         formData
       );
       localStorage.setItem("authToken", response.data.token); // Save token in localStorage
+      localStorage.setItem('userId', response.data.userId);  // Store userId
+         localStorage.setItem('authToken', response.data.token);  // Store authToken
       navigate("/dashboard"); // Redirect to dashboard page after login
     } catch (error) {
       console.error("Error during login:", error);

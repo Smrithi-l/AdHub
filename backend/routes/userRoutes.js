@@ -31,6 +31,8 @@ router.post('/register', async (req, res) => {
 });
 
 // Login Route
+
+
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
@@ -45,13 +47,22 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET || 'your_jwt_secret', { expiresIn: '1h' });
+    const token = jwt.sign(
+      { userId: user._id },
+      process.env.JWT_SECRET || 'your_jwt_secret',
+      { expiresIn: '1h' }
+    );
 
-    res.status(200).json({ token });
+    // Send userId in response
+    res.status(200).json({ token, userId: user._id });
+
+
+
   } catch (err) {
     console.error('Error during login:', err);
     res.status(500).json({ message: 'Server error', error: err.message });
   }
 });
+
 
 module.exports = router;

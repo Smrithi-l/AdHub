@@ -207,66 +207,120 @@ const Header = () => {
 
         {/* Features Section */}
         <motion.section
-          id="features"
-          className="features"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.2, delay: 0.3 }}
-        >
-          <Typography variant="h3" align="center" gutterBottom>
-            Key Features
-          </Typography>
-          <Box display="flex" justifyContent="space-around" flexWrap="wrap">
-            <motion.div
-              className="feature-card"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.5, duration: 0.7 }}
-            >
-              <Typography variant="h6">Real-Time Analytics</Typography>
-              <Typography>Track campaign performance with powerful tools.</Typography>
-            </motion.div>
-            <motion.div
-              className="feature-card"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.7, duration: 0.7 }}
-            >
-              <Typography variant="h6">Optimized Campaigns</Typography>
-              <Typography>Maximize ROI with AI-driven optimization.</Typography>
-            </motion.div>
-            <motion.div
-              className="feature-card"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.9, duration: 0.7 }}
-            >
-              <Typography variant="h6">Trusted Connections</Typography>
-              <Typography>Collaborate with reliable advertisers and publishers.</Typography>
-            </motion.div>
-          </Box>
-        </motion.section>
+      id="key-features"
+      className="key-features-section"
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 1 }}
+    >
+      <Container maxWidth="lg">
+        <Typography variant="h2" gutterBottom align="center" className="key-features-title">
+          Key Features
+        </Typography>
+
+        <div className="features-container">
+          {/* Feature Card 1 */}
+          <motion.div
+            className="feature-card"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <div className="card-front">
+              <h3>🚀 Fast Setup</h3>
+              <p>Get started within minutes with our easy-to-use interface and quick configuration.</p>
+            </div>
+            <div className="card-back">
+              <h3>Learn More</h3>
+              <p>We provide detailed guides and instant support to make your setup smooth and effortless.</p>
+            </div>
+          </motion.div>
+
+          {/* Feature Card 2 */}
+          <motion.div
+            className="feature-card"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <div className="card-front">
+              <h3>💡 Advanced Analytics</h3>
+              <p>Track your campaigns in real time with robust data-driven insights and AI-powered tools.</p>
+            </div>
+            <div className="card-back">
+              <h3>Learn More</h3>
+              <p>Gain a deep understanding of campaign performance to refine your strategy and maximize ROI.</p>
+            </div>
+          </motion.div>
+
+          {/* Feature Card 3 */}
+          <motion.div
+            className="feature-card"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <div className="card-front">
+              <h3>🌍 Global Reach</h3>
+              <p>Expand your campaigns globally and connect with audiences worldwide across multiple platforms.</p>
+            </div>
+            <div className="card-back">
+              <h3>Learn More</h3>
+              <p>Our platform supports global publishers, allowing you to scale your campaigns without borders.</p>
+            </div>
+          </motion.div>
+
+          
+        </div>
+      </Container>
+    </motion.section>
+
 
         {/* About Section */}
         <motion.section
-          id="about"
-          className="about"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.2, delay: 0.6 }}
-        >
-          <Container maxWidth="lg">
-            <Typography variant="h2" gutterBottom align="center">
-              About Us
-            </Typography>
-            <Typography variant="body1" paragraph align="center">
-              AdHub is a platform designed to connect advertisers with publishers
-              seamlessly. Our mission is to provide an efficient way to run
-              optimized ad campaigns, track performance in real-time, and build
-              lasting, trusted partnerships across industries.
-            </Typography>
-          </Container>
-        </motion.section>
+  id="about"
+  className="about"
+  initial={{ opacity: 0, y: 50 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 1 }}
+>
+  <Container maxWidth="lg">
+    <Typography variant="h2" gutterBottom align="center" className="about-title">
+          About AdHub
+        </Typography>
+        <Typography variant="body1" paragraph align="center" className="about-subtext">
+          AdHub is a next-generation advertising platform connecting advertisers with publishers effortlessly.
+          Our goal is to provide AI-driven insights, real-time analytics, and optimized campaign management 
+          to ensure every ad reaches the right audience.
+        </Typography>
+    
+    <div className="about-grid">
+      <motion.div 
+        className="about-card"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        <h3>🚀 Our Mission</h3>
+        <p>To revolutionize the digital advertising industry with transparency, data-driven decision-making, and AI-powered optimizations.</p>
+      </motion.div>
+
+      <motion.div 
+        className="about-card"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        <h3>🌍 Our Vision</h3>
+        <p>Creating a seamless bridge between advertisers and publishers for an engaging and profitable ecosystem.</p>
+      </motion.div>
+
+      <motion.div 
+        className="about-card"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        <h3>💡 Why Choose Us?</h3>
+        <p>With cutting-edge technology, superior analytics, and global reach, we make advertising simple yet powerful.</p>
+      </motion.div>
+    </div>
+  </Container>
+</motion.section>
 
         {/* Contact Section */}
         <motion.section

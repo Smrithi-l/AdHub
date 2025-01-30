@@ -8,13 +8,14 @@
 .image-section {
   flex: 1;
   background: url("C:\Users\HP\OneDrive\Desktop\AdHub\frontend\src\Components\images\login.jpg") no-repeat center center;
+  transform: translateX(-20px) translateY(1px); /* Moves the image to the left and down */
   background-size: cover;
 }
 
 /* Form Section (Left) */
 .form-section {
   flex: 1;
-  padding: 30px;
+  padding: 2px;
   display: flex;
   flex-direction: column;
   justify-content: center;
