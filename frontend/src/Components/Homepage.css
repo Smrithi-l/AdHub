@@ -137,13 +137,17 @@ button {
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 /* Header */
 .header {
   font-family: 'Nunito', sans-serif;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 20px 10px;
+  padding: 20px 1px;
   background-color: #f7fbff;
   color: rgb(255, 255, 255);
   position: fixed;
@@ -158,7 +162,7 @@ button {
   font-size: 2.5rem;
   font-weight: bold;
   color: #085e15;
-  margin-right: 790px;
+  margin-right: 700px;
   flex-shrink: 0;
   transform: translateX(20px); /* Adjust the value to move the logo to the right */
 }
@@ -267,23 +271,23 @@ button {
   font-family: 'Poppins', sans-serif; /* Apply font for buttons */
 }
 
-/* Features Section */
+
 .key-features-section {
   text-align: center;
-  padding: 50px 20px;
+  padding: 70px 200px;
   background-color: #f4f4f9;
 }
 
 .features-container {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 35px;
   flex-wrap: wrap;
 }
 
 .feature-card {
   width: 250px;
-  height: 300px;
+  height: 250px;
   perspective: 1000px; /* Adds depth for the flip effect */
   position: relative;
 }
@@ -293,20 +297,21 @@ button {
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column; /* Ensures heading stays on top of paragraph */
   justify-content: center;
   align-items: center;
   border-radius: 10px;
   color: white;
-  font-size: 1.2em;
   text-align: center;
   position: absolute;
   backface-visibility: hidden;
   transition: transform 0.5s ease;
+  padding: 15px; /* Adds spacing inside the card */
+  box-sizing: border-box; /* Includes padding in dimensions */
 }
 
 .card-front {
   background: linear-gradient(to right, #a4d8d5, #61DBFB); /* Flip color scheme */
-
 }
 
 .card-back {
@@ -322,7 +327,15 @@ button {
   transform: rotateY(0deg); /* Show back on hover */
 }
 
+.card-content h3 {
+  margin-bottom: 10px; /* Adds spacing below heading */
+  font-size: 1.5em;
+}
 
+.card-content p {
+  font-size: 1em;
+  line-height: 1.4; /* Improves readability of paragraph */
+}
 
 
 /* Contact Section */
@@ -357,7 +370,7 @@ button {
 }
 
 .about-subtext {
-  font-size: 2rem;
+  font-size: 1.5rem;
   margin-bottom: 40px;
   color: #666;
 }

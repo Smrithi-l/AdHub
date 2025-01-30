@@ -43,7 +43,7 @@ const AdminDashboard = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get("http://localhost:5000/api/admin/ads", {
-        headers: { Authorization: `Bearer ${token} `},
+        headers: { Authorization: `Bearer ${token}` },
       });
       setAds(response.data.ads);
     } catch (err) {
@@ -197,28 +197,7 @@ const AdminDashboard = () => {
   </TableBody>
 </Table>
 
-{/* Active & Expired Ads */}
-<Typography variant="h6" sx={{ mt: 4 }} gutterBottom>
-  Active Ads
-</Typography>
-<Table>
-  <TableHead sx={{ backgroundColor: "#eeeeee" }}>
-    <TableRow>
-      <TableCell>ID</TableCell>
-      <TableCell>Title</TableCell>
-      <TableCell>Expiry Date</TableCell>
-    </TableRow>
-  </TableHead>
-  <TableBody>
-    {activeAds.map((ad) => (
-      <TableRow key={ad._id}>
-        <TableCell>{ad._id}</TableCell>
-        <TableCell>{ad.title}</TableCell>
-        <TableCell>{new Date(ad.expiryDate).toLocaleDateString()}</TableCell>
-      </TableRow>
-    ))}
-  </TableBody>
-</Table>
+
 
           {/* Chat Queries Table */}
           <Typography variant="h6" sx={{ mt: 4 }} gutterBottom>

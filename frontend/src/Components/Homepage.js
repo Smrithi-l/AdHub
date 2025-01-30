@@ -2,7 +2,9 @@ import { Link } from "react-router-dom";
 import { Container, Typography, Grid, TextField, Button, Box } from "@mui/material";
 import { motion } from "framer-motion";
 import React, { useState, useEffect } from "react";
-import heroImage from "./images/education.png"; // Adjust the path as needed
+import "./Homepage.css"; 
+
+import heroImage from "./images/education.png"; 
 
 import { RiComputerLine } from "react-icons/ri";
 import { CiMobile3 } from "react-icons/ci";
@@ -10,11 +12,9 @@ import { TbWorldWww } from "react-icons/tb";
 import { IoMdHappy } from "react-icons/io";
 import { BiSupport } from "react-icons/bi";
 import { IoPulseOutline } from "react-icons/io5";
-import "./Homepage.css"; // Ensure your CSS file is correctly imported
 
 const Header = () => {
   const [activeLink, setActiveLink] = useState("");
-
   const handleLinkClick = (link) => {
     setActiveLink(link);
   };
@@ -98,48 +98,56 @@ const Header = () => {
         >
           <div className="logo">AdHub</div>
           <nav className="nav">
-            <Link
-              to="/about"
-              className={activeLink === "about" ? "active" : ""}
-              onClick={() => handleLinkClick("about")}
-            >
-              About
-            </Link>
-            <Link
-              to="/contact"
-              className={activeLink === "contact" ? "active" : ""}
-              onClick={() => handleLinkClick("contact")}
-            >
-              Contact
-            </Link>
-            <Link
-              to="#features"
-              className={activeLink === "features" ? "active" : ""}
-              onClick={() => handleLinkClick("features")}
-            >
-              Features
-            </Link>
-            <Link
-              to="/login"
-              className={activeLink === "login" ? "active" : ""}
-              onClick={() => handleLinkClick("login")}
-            >
-              Login
-            </Link>
-            <Link
-              to="/signup"
-              className={activeLink === "signup" ? "active" : ""}
-              onClick={() => handleLinkClick("signup")}
-            >
-              Sign Up
-            </Link>
-            <Link
-              to="/adminlogin"
-              className={activeLink === "adminlogin" ? "active" : ""}
-              onClick={() => handleLinkClick("adminlogin")}
-            >
-              Admin Login
-            </Link>
+  <Link
+    to="#about"
+    className={activeLink === "about" ? "active" : ""}
+    onClick={() => handleLinkClick("about")}
+  >
+    About
+  </Link>
+  <Link
+    to="#key-features"
+    className={activeLink === "features" ? "active" : ""}
+    onClick={() => handleLinkClick("features")}
+  >
+    Features
+  </Link>
+  <Link
+    to="#services"
+    className={activeLink === "services" ? "active" : ""}
+    onClick={() => handleLinkClick("services")}
+  >
+    Services
+  </Link>
+  <Link
+    to="#contact"
+    className={activeLink === "contact" ? "active" : ""}
+    onClick={() => handleLinkClick("contact")}
+  >
+    Contact
+  </Link>
+  <Link
+    to="/login"
+    className={activeLink === "login" ? "active" : ""}
+    onClick={() => handleLinkClick("login")}
+  >
+    Login
+  </Link>
+  <Link
+    to="/signup"
+    className={activeLink === "signup" ? "active" : ""}
+    onClick={() => handleLinkClick("signup")}
+  >
+    Sign Up
+  </Link>
+  <Link
+    to="/adminlogin"
+    className={activeLink === "adminlogin" ? "active" : ""}
+    onClick={() => handleLinkClick("adminlogin")}
+  >
+    Admin Login
+  </Link>
+
           </nav>
         </motion.header>
 
