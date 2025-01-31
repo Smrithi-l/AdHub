@@ -48,7 +48,6 @@ const AdminLogin = () => {
       <Grid container spacing={4} alignItems="center">
         {/* Left Section: Image */}
         <Grid item xs={12} md={6}>
-          
             <Box
               component="img"
               src={loginImage}
@@ -58,14 +57,12 @@ const AdminLogin = () => {
                 height: "auto",
                 borderRadius: 1,
                 marginLeft: "-80px",  // Adjust this value to control how far left the image moves
-
               }}
             />
         </Grid>
 
         {/* Right Section: Login Form */}
-        <Grid item xs={12} md={6}>
-          
+        <Grid item xs={12} md={6}>   
             <Typography variant="h4" align="center" gutterBottom>
               Admin Login
             </Typography>

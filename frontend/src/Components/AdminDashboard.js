@@ -88,7 +88,6 @@ const AdminDashboard = () => {
     }
   };
 
-
   const activeAds = ads.filter((ad) => ad.status === "approved");
   const expiredAds = ads.filter((ad) => new Date(ad.expiryDate) < new Date());
 
@@ -116,10 +115,7 @@ const AdminDashboard = () => {
           {/* Total Ads Count */}
           <Paper sx={{ p: 3, mt: 2, textAlign: "center", backgroundColor: "#eeeeee" }}>
             <Typography variant="h5">Total Ads Posted: {ads.length}</Typography>
-          </Paper>
-
-          {/* Ad Status Distribution (Pie Chart) */}
-         
+          </Paper> 
 
           {/* Ads Per Client (Bar Chart) */}
           <Typography variant="h6" sx={{ mt: 4 }} gutterBottom>
@@ -135,7 +131,6 @@ const AdminDashboard = () => {
               <Bar dataKey="ads" fill="#1976d2" />
             </BarChart>
           </ResponsiveContainer>
-
           <Typography variant="h6" sx={{ mt: 4 }} gutterBottom>
   Ads Overview
 </Typography>
@@ -196,8 +191,6 @@ const AdminDashboard = () => {
     ))}
   </TableBody>
 </Table>
-
-
 
           {/* Chat Queries Table */}
           <Typography variant="h6" sx={{ mt: 4 }} gutterBottom>

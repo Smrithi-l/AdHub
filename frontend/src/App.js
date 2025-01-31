@@ -7,7 +7,6 @@ import Login from "./Components/Login";
 import AdminLogin from "./Components/AdminLogin";
 import AdminDashboard from "./Components/AdminDashboard";
 import ChatWidget from "./Components/ChatWidget"; 
-//import User from "./Components/User";
 
 function App() {
   return (
@@ -20,8 +19,6 @@ function App() {
         <Route path="/AdminLogin" element={<AdminLogin />} />
         <Route path="/admin-dashboard" element={<AdminDashboard/>} />
         <Route path="/chatwidget" element={  <ChatWidget />} />
-      
-        {/* Add other routes here as needed */}
       </Routes>
     </Router>
   );

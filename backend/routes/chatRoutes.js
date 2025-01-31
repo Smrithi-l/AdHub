@@ -1,6 +1,5 @@
 const express = require("express");
 const ChatQuery = require("../models/chatQuery");
-
 const router = express.Router();
 
 // Save chat query

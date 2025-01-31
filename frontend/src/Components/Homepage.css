@@ -271,7 +271,6 @@ html {
   font-family: 'Poppins', sans-serif; /* Apply font for buttons */
 }
 
-
 .key-features-section {
   text-align: center;
   padding: 70px 200px;
@@ -337,7 +336,6 @@ html {
   line-height: 1.4; /* Improves readability of paragraph */
 }
 
-
 /* Contact Section */
 .contact {
   padding: 50px 20px;
@@ -353,7 +351,6 @@ html {
   max-width: 800px;
   margin: 0 auto;
 }
-
 
 /* About Us Section */
 .about {
@@ -419,7 +416,6 @@ html {
     width: 90%;
   }
 }
-
 
 /* Footer */
 .footer {

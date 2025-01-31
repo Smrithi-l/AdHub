@@ -98,34 +98,11 @@ const Header = () => {
         >
           <div className="logo">AdHub</div>
           <nav className="nav">
-  <Link
-    to="#about"
-    className={activeLink === "about" ? "active" : ""}
-    onClick={() => handleLinkClick("about")}
-  >
-    About
-  </Link>
-  <Link
-    to="#key-features"
-    className={activeLink === "features" ? "active" : ""}
-    onClick={() => handleLinkClick("features")}
-  >
-    Features
-  </Link>
-  <Link
-    to="#services"
-    className={activeLink === "services" ? "active" : ""}
-    onClick={() => handleLinkClick("services")}
-  >
-    Services
-  </Link>
-  <Link
-    to="#contact"
-    className={activeLink === "contact" ? "active" : ""}
-    onClick={() => handleLinkClick("contact")}
-  >
-    Contact
-  </Link>
+           <a href="#about">About</a>
+           <a href="#key-features">Features</a>
+           <a href="#services">Services</a>
+           <a href="#contact">Contact</a>
+
   <Link
     to="/login"
     className={activeLink === "login" ? "active" : ""}
@@ -147,7 +124,6 @@ const Header = () => {
   >
     Admin Login
   </Link>
-
           </nav>
         </motion.header>
 
@@ -192,26 +168,26 @@ const Header = () => {
         </motion.section>
 
         {/* Services Section with Animated Items */}
-        <section className="bg-white">
-          <div className="container pb-14 pt-16">
-            <h1 className="text-4xl font-bold text-left pb-10">Services we provide</h1>
-            <div className="service-container">
-              {ServicesData.map((service) => (
-                <motion.div
-                  key={service.id}
-                  variants={SlideLeft(service.delay)}
-                  initial="initial"
-                  whileInView="animate"
-                  viewport={{ once: true }}
-                  className="service-box"
-                >
-                  <div className="icon-container">{service.icon}</div>
-                  <h1 className="service-title">{service.title}</h1>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <section id="services" className="bg-white">
+  <div className="container pb-14 pt-16">
+    <h1 className="text-4xl font-bold text-left pb-10">Services we provide</h1>
+    <div className="service-container">
+      {ServicesData.map((service) => (
+        <motion.div
+          key={service.id}
+          variants={SlideLeft(service.delay)}
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true }}
+          className="service-box"
+        >
+          <div className="icon-container">{service.icon}</div>
+          <h1 className="service-title">{service.title}</h1>
+        </motion.div>
+      ))}
+    </div>
+  </div>
+</section>
 
         {/* Features Section */}
         <motion.section
@@ -274,12 +250,9 @@ const Header = () => {
               <p>Our platform supports global publishers, allowing you to scale your campaigns without borders.</p>
             </div>
           </motion.div>
-
-          
         </div>
       </Container>
     </motion.section>
-
 
         {/* About Section */}
         <motion.section
